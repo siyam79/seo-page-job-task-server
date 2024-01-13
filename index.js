@@ -36,21 +36,22 @@ async function run() {
         })
 
 
-        app.put("/v1/addFileTasks/", async (req, res) => {
+        app.put("/v1/addFileTasks", async (req, res) => {
             const id = req.query.id;
             const file = req.query.file;
+            const fileCount = parseInt(file)
+            console.log(fileCount);
             console.log(id);
             let query = {};
             let updatedItem = {};
             if (id) {
                 query = { _id: new ObjectId(id) };
-                updatedItem = { $inc: { file : file } };
+                updatedItem = { $inc: { file : fileCount } };
             }
         
             const result = await tasksCollection.findOneAndUpdate(query ,updatedItem)
             res.send(result)
         })
-
 
 
         await client.db("admin").command({ ping: 1 });
