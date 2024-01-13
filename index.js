@@ -36,23 +36,20 @@ async function run() {
         })
 
 
-        app.put("/v1/addFileTasks/:id", async (req, res) => {
-            const id = req.params.id;
+        app.put("/v1/addFileTasks/", async (req, res) => {
+            const id = req.query.id;
+            const file = req.query.file;
             console.log(id);
             let query = {};
             let updatedItem = {};
             if (id) {
                 query = { _id: new ObjectId(id) };
-                updatedItem = { $inc: { file : 1 } };
+                updatedItem = { $inc: { file : file } };
             }
         
             const result = await tasksCollection.findOneAndUpdate(query ,updatedItem)
             res.send(result)
         })
-
-
-
-
 
 
 
